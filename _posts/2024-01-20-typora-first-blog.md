@@ -2,9 +2,9 @@
 layout:     post
 title:      "我的第一篇文章"
 subtitle:   "从 Typora 开始写博客"
-date:       2025-10-26 21:00:00
-author:     "ccjm"
-header-img: "img/post-bg-desk.jpg"
+date:       2025-10-26
+author:     ccjm
+header-img: img/post-bg-desk.jpg
 catalog:    true
 tags:
     - 学习记录
