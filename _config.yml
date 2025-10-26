@@ -1,17 +1,17 @@
 # 网站设置
-title: BY Blog
+title: ccjm 的博客
 SEOTitle: ccjm的博客 | BY Blog
 header-img: img/post-bg-desk.jpg
 email: ccjm68371@gmail.com
-description: "Every failure is leading towards success."
-keyword: "BY, BY Blog, ccjm的博客, tanjiashuo, ccjm, iOS, Apple, iPhone"
+description: "记录学习与成长的点滴"
+keyword: "ccjm, ccjm的博客, 技术博客, 开发, 网络安全, web安全, 渗透测试, 漏洞挖掘"
 url: "http://ccjmcc.github.io"          # 你的主机地址，用于绝对URL
 baseurl: ""      # 例如，如果博客托管在 'host/blog' 上，填写 '/blog'
-github_repo: "https://github.com/ccjmcc/ccjmcc.github.io.git" # 你的代码仓库
+github_repo: "https://github.com/ccjmcc/ccjmcc.github.io.git" # 你的代码仓库（改成你的仓库地址）
 
 # 侧边栏设置
 sidebar: true                           # 是否使用侧边栏
-sidebar-about-description: "Goals determine what you going to be!"
+sidebar-about-description: "坚持记录，持续成长"
 sidebar-avatar: /img/about-BY-gentle.jpg      # 使用绝对URL，因为在 '/' 和 '/about/' 都会使用
 
 
@@ -61,12 +61,12 @@ kramdown:
 
 # Gitalk
 gitalk:
-  enable: true    #是否开启Gitalk评论
+  enable: false    #是否开启Gitalk评论（设置为false关闭评论）
   clientID: f2c84e7629bb1446c1a4                            #生成的clientID
   clientSecret: ca6d6139d1e1b8c43f8b2e19492ddcac8b322d0d    #生成的clientSecret
-  repo: qiubaiying.github.io    #仓库名称
-  owner: qiubaiying    #github用户名
-  admin: qiubaiying
+  repo: ccjmcc.github.io    #仓库名称
+  owner: ccjmcc    #github用户名
+  admin: ccjmcc
   distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
