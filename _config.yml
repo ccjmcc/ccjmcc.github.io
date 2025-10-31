@@ -12,7 +12,7 @@ github_repo: "https://github.com/ccjmcc/ccjmcc.github.io.git" # 你的代码仓�
 # 侧边栏设置
 sidebar: true                           # 是否使用侧边栏
 sidebar-about-description: "坚持记录，持续成长"
-sidebar-avatar: /img/about-BY-gentle.jpg      # 使用绝对URL，因为在 '/' 和 '/about/' 都会使用
+sidebar-avatar: /img/about.jpg      # 使用绝对URL，因为在 '/' 和 '/about/' 都会使用
 
 
 
