@@ -2,11 +2,11 @@
 layout: default
 ---
 
-<!-- Image to hack wechat -->
+<!-- 幻灯片页：通过 iframe 嵌入外部演示 -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
-<!-- Post Header -->
+<!-- 顶部区域：用 iframe 填充 -->
 <style type="text/css">
     header.intro-header{
         /*background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')*/
@@ -18,7 +18,7 @@ layout: default
         height: 100%;
         border: 0;
     }
-    /* Override Nav Style */
+    /* 可选：反转导航颜色 */
     {% if page.navcolor == "invert" %}
         .navbar-custom .nav li a,
         .navbar-custom .nav li a:hover,
@@ -54,7 +54,7 @@ layout: default
     </iframe>
 </header>
 
-<!-- Post Content -->
+<!-- 正文，与普通文章类似 -->
 <article>
     <div class="container">
         <div class="row">
@@ -88,7 +88,7 @@ layout: default
                     {% endif %}
                 </ul>
 
-                <!-- Gitalk 评论 start  -->
+                <!-- Gitalk 评论（按需开启） -->
                 {% if site.gitalk.enable %}
                 <!-- Gitalk link  -->
                 <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
@@ -110,7 +110,7 @@ layout: default
                 <!-- Gitalk end -->
 
                 {% if site.disqus.enable %}
-                <!-- disqus 评论框 start -->
+                <!-- Disqus 评论（按需开启） -->
                 <div class="comment">
                     <div id="disqus_thread" class="disqus-thread">
 
@@ -121,7 +121,7 @@ layout: default
 
             </div>
 
-            <!-- Sidebar Container -->
+            <!-- 侧栏：推荐标签与友情链接 -->
             <div class="sidebar-container
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1 ">
@@ -158,7 +158,7 @@ layout: default
     </div>
 </article>
 
-<!-- resize header to fullscreen keynotes -->
+<!-- 使头图区域自适应全屏高度（预留 85px 提示可滚动） -->
 <script>
     var $header = document.getElementsByTagName("header")[0];
     function resize(){
@@ -184,7 +184,7 @@ layout: default
 
 
 {% if site.disqus.enable %}
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<!-- Disqus 公共脚本（页面仅需一次） -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "{{site.disqus.username}}";
@@ -197,12 +197,12 @@ layout: default
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- disqus 公共JS代码 end -->
+<!-- Disqus 公共脚本 end -->
 {% endif %}
 
 
 {% if site.anchorjs %}
-<!-- async load function -->
+<!-- AnchorJS（为标题添加锚点） -->
 <script>
     function async(u, c) {
       var d = document, t = 'script',

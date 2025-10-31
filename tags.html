@@ -5,7 +5,7 @@ description: keep hungry keep foolish
 header-img: "img/tag-bg.jpg"
 ---
 
-<!-- Page Header -->
+<!-- 标签页头部 -->
 <header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
     <div class="container">
         <div class="row">
@@ -19,7 +19,7 @@ header-img: "img/tag-bg.jpg"
     </div>
 </header>
 
-<!-- Main Content -->
+<!-- 主体内容：标签云 + 各标签下文章列表 -->
 <div class="container">
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -36,7 +36,7 @@ header-img: "img/tag-bg.jpg"
                     <li>外国产品、术语优先使用英文</li>
             </blockquote>-->
 
-            <!-- 标签列表 -->
+            <!-- 标签列表（按标签分组展示文章） -->
 			{% for tag in site.tags %}
 			<div class="one-tag-list">
 			  	<span class="fa fa-tag listing-seperator" id="{{ tag[0] }}">

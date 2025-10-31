@@ -1,4 +1,4 @@
-<!-- Footer -->
+<!-- 页脚区域：社交链接、版权、脚本与统计 -->
 <footer>
     <div class="container">
         <div class="row">
@@ -91,8 +91,10 @@
                     {% endif %}
                 </ul>
                 <p class="copyright text-muted">
+                    <!-- 版权年份为当前构建年份 -->
                     Copyright &copy; {{ site.title }} {{ site.time | date: '%Y' }}
                     <br>
+                    <!-- 主题仓库与 Star 按钮 -->
                     Theme on <a href="{{ site.github_repo }}">GitHub</a> |
                     <iframe
                         style="margin-left: 2px; margin-bottom:-5px;"
@@ -114,11 +116,11 @@
 <!-- Custom Theme JavaScript -->
 <script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
 
-<!-- Service Worker -->
+<!-- Service Worker（根据配置开启 PWA） -->
 {% if site.service-worker %}
 <script type="text/javascript">
     if(navigator.serviceWorker){
-        // For security reasons, a service worker can only control the pages that are in the same directory level or below it. That's why we put sw.js at ROOT level.
+        // 安全限制：SW 仅能控制同级及以下路径，因此 sw.js 放在站点根目录
         navigator.serviceWorker
             .register('/sw.js')
             .then((registration) => {console.log('Service Worker Registered. ', registration)})
@@ -160,7 +162,7 @@
 -->
 
 
-<!-- jquery.tagcloud.js -->
+<!-- 标签云：仅在 tags 页面加载 -->
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
@@ -174,7 +176,7 @@
     }
 </script>
 
-<!--fastClick.js -->
+<!-- FastClick：去除移动端点击延迟 -->
 <script>
     async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
         var $nav = document.querySelector("nav");
@@ -183,7 +185,7 @@
 </script>
 
 
-<!-- Google Analytics -->
+<!-- Google Analytics（如配置则注入） -->
 {% if site.ga_track_id %}
 <script>
     // dynamic User by Hux
@@ -202,7 +204,7 @@
 {% endif %}
 
 
-<!-- Baidu Tongji -->
+<!-- Baidu Tongji（如配置则注入） -->
 {% if site.ba_track_id %}
 <script>
     // dynamic User by Hux
@@ -221,7 +223,7 @@
 
 
 
-<!-- Side Catalog -->
+<!-- 目录侧栏：文章页按标题生成目录 -->
 {% if page.catalog %}
 <script type="text/javascript">
     function generateCatalog (selector) {

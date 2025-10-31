@@ -6,31 +6,28 @@
     <meta name="description" content="{{ site.description }}">
     <meta name="keywords"  content="{{ site.keyword }}">
     <meta name="theme-color" content="{{ site.chrome-tab-theme-color }}">
-    
+    <!-- 页面标题：优先展示当前页标题，其次使用站点 SEO 标题 -->
     <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
 
-    <!-- Web App Manifest -->
+    <!-- PWA Manifest（安装到桌面时使用的配置与图标） -->
     <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
 
-    <!-- Favicon -->
+    <!-- 浏览器标签图标与 Apple Touch Icon -->
     <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.ico">
 
-    <!-- Safari Webpage Icon    by-BY -->
     <link rel="apple-touch-icon" href="{{ site.baseurl }}/img/apple-touch-icon.png">
     
-    <!-- Canonical URL -->
+    <!-- 规范化链接（利于 SEO，避免重复收录） -->
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
-    <!-- Bootstrap Core CSS -->
+    <!-- 核心样式：Bootstrap、主题样式、代码高亮 -->
     <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ "/css/hux-blog.min.css" | prepend: site.baseurl }}">
 
-    <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
 
-    <!-- Custom Fonts -->
+    <!-- 字体图标（CDN） -->
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -43,13 +40,13 @@
     -->
 
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- 兼容性脚本：仅旧版 IE 需要 -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- ga & ba script hoook -->
+    <!-- 统计脚本占位（在 footer 中实际注入） -->
     <script></script>
 </head>

@@ -3,6 +3,7 @@ layout: page
 description: "Thinking will not overcome fear but action will."
 ---
 
+<!-- 首页文章列表（按分页显示） -->
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">

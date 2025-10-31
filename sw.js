@@ -1,13 +1,10 @@
-/* ===========================================================
- * sw.js
- * ===========================================================
- * Copyright 2016 @huxpro
- * Licensed under Apache 2.0 
- * Register service worker.
- * ========================================================== */
+/*
+ * Service Worker：缓存与离线支持（SWR 策略 + 离线回退）
+ */
 
 const PRECACHE = 'precache-v1';
 const RUNTIME = 'runtime';
+// 允许被 SW 处理的域名白名单
 const HOSTNAME_WHITELIST = [
   self.location.hostname,
   "huangxuan.me",
@@ -16,7 +13,7 @@ const HOSTNAME_WHITELIST = [
 ]
 
 
-// The Util Function to hack URLs of intercepted requests
+// 标准化 URL：统一协议 + 加缓存破坏参数，避免陈旧缓存
 const getFixedUrl = (req) => {
   var now = Date.now();
   url = new URL(req.url)
@@ -42,12 +39,8 @@ const getFixedUrl = (req) => {
 // which checks for a GET request with an Accept: text/html header.
 const isNavigationReq = (req) => (req.mode === 'navigate' || (req.method === 'GET' && req.headers.get('accept').includes('text/html')))
 
-// The Util Function to detect if a req is end with extension
-// Accordin to Fetch API spec <https://fetch.spec.whatwg.org/#concept-request-destination>
-// Any HTML's navigation has consistently mode="navigate" type="" and destination="document" 
-// including requesting an img (or any static resources) from URL Bar directly.
-// So It ends up with that regExp is still the king of URL routing ;)
-// P.S. An url.pathname has no '.' can not indicate it ends with extension (e.g. /api/version/1.2/)
+// 是否为带扩展名的请求（多为静态资源）
+// 说明：URL 里不带点不等于“不是静态资源”，这里只做粗略判断
 const endWithExtension = (req) => Boolean(new URL(req.url).pathname.match(/\.\w+$/))
 
 // Redirect in SW manually fixed github pages arbitray 404s on things?blah 
@@ -68,14 +61,7 @@ const getRedirectUrl = (req) => {
   return url.href
 }
 
-/**
- *  @Lifecycle Install
- *  Precache anything static to this version of your app.
- *  e.g. App Shell, 404, JS/CSS dependencies...
- *
- *  waitUntil() : installing ====> installed
- *  skipWaiting() : waiting(installed) ====> activating
- */
+// 安装：预缓存离线页
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(PRECACHE).then(cache => {
@@ -87,27 +73,17 @@ self.addEventListener('install', e => {
 });
 
 
-/**
- *  @Lifecycle Activate
- *  New one activated when old isnt being used.
- *
- *  waitUntil(): activating ====> activated
- */
+// 激活：立即接管控制权
 self.addEventListener('activate',  event => {
-  console.log('service worker activated.')
+  // console.log('service worker activated.')
   event.waitUntil(self.clients.claim());
 });
 
 
-/**
- *  @Functional Fetch
- *  All network requests are being intercepted here.
- * 
- *  void respondWith(Promise<Response> r);
- */
+// 抓取：优先网络，失败回退缓存，最终离线页
 self.addEventListener('fetch', event => {
   // logs for debugging
-  console.log(`fetch ${event.request.url}`)
+  // console.log(`fetch ${event.request.url}`)
   //console.log(` - type: ${event.request.type}; destination: ${event.request.destination}`)
   //console.log(` - mode: ${event.request.mode}, accept: ${event.request.headers.get('accept')}`)
 

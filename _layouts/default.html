@@ -5,11 +5,14 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+    <!-- 顶部导航 -->
 
     {% include nav.html %}
 
+    <!-- 页面主体内容由各布局/页面注入 -->
     {{ content }}
 
+    <!-- 页脚与通用脚本 -->
     {% include footer.html %}
 
 

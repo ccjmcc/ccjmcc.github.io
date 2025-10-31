@@ -27,13 +27,13 @@
 //  $("img").addClass("img-responsive");
 // });
 
-// responsive tables
+// 让表格自适应容器
 $(document).ready(function() {
     $("table").wrap("<div class='table-responsive'></div>");
     $("table").addClass("table");
 });
 
-// responsive embed videos
+// 让视频 iframe 自适应 16:9
 $(document).ready(function() {
     $('iframe[src*="youtube.com"]').wrap('<div class="embed-responsive embed-responsive-16by9"></div>');
     $('iframe[src*="youtube.com"]').addClass('embed-responsive-item');
@@ -41,7 +41,7 @@ $(document).ready(function() {
     $('iframe[src*="vimeo.com"]').addClass('embed-responsive-item');
 });
 
-// Navigation Scripts to Show Header on Scroll-Up
+// 导航栏滚动显示/隐藏与目录定位
 jQuery(document).ready(function($) {
     var MQL = 1170;
 
@@ -72,7 +72,7 @@ jQuery(document).ready(function($) {
                 this.previousTop = currentTop;
 
 
-                //adjust the appearance of side-catalog
+                // 侧边目录吸顶显示
                 $catalog.show()
                 if (currentTop > (bannerHeight + 41)) {
                     $catalog.addClass('fixed')

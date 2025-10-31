@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- 品牌与折叠按钮（移动端） -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle">
                 <span class="sr-only">Toggle navigation</span>
@@ -12,7 +12,7 @@
             <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- 导航内容（右侧菜单） -->
         <div id="huxblog_navbar">
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -32,9 +32,7 @@
     <!-- /.container -->
 </nav>
 <script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
+    // 自定义高性能导航开合（替代 Bootstrap 默认导航）
     var $body   = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
@@ -43,9 +41,8 @@
     var __HuxNav__ = {
         close: function(){
             $navbar.className = " ";
-            // wait until animation end.
+            // 等待过渡动画结束后收起高度
             setTimeout(function(){
-                // prevent frequently toggle
                 if($navbar.className.indexOf('in') < 0) {
                     $collapse.style.height = "0px"
                 }
@@ -57,7 +54,7 @@
         }
     }
 
-    // Bind Event
+    // 绑定按钮事件
     $toggle.addEventListener('click', function(e){
         if ($navbar.className.indexOf('in') > 0) {
             __HuxNav__.close()
@@ -66,17 +63,7 @@
         }
     })
 
-    /**
-     * Since Fastclick is used to delegate 'touchstart' globally
-     * to hack 300ms delay in iOS by performing a fake 'click',
-     * Using 'e.stopPropagation' to stop 'touchstart' event from 
-     * $toggle/$collapse will break global delegation.
-     * 
-     * Instead, we use a 'e.target' filter to prevent handler
-     * added to document close HuxNav.  
-     *
-     * Also, we use 'click' instead of 'touchstart' as compromise
-     */
+    // 点击空白处收起导航（不影响 FastClick 全局委托）
     document.addEventListener('click', function(e){
         if(e.target == $toggle) return;
         if(e.target.className == 'icon-bar') return;
