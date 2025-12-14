@@ -349,6 +349,16 @@ async function editPost(filename, sha) {
     }
 }
 
+// Base64 解码辅助函数（正确处理 UTF-8）
+function base64ToUtf8(base64) {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return new TextDecoder('utf-8').decode(bytes);
+}
+
 // 获取文章内容
 async function getPostContent(filename, sha) {
     const url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/git/blobs/${sha}`;
@@ -364,13 +374,7 @@ async function getPostContent(filename, sha) {
     }
     
     const data = await response.json();
-    // 正确解码 UTF-8 编码的 Base64 字符串
-    const binaryString = atob(data.content);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    return new TextDecoder('utf-8').decode(bytes);
+    return base64ToUtf8(data.content);
 }
 
 // 解析文章内容
@@ -502,18 +506,31 @@ async function getFileInfo(filename) {
     return await response.json();
 }
 
+// Base64 编码辅助函数（正确处理 UTF-8）
+function utf8ToBase64(str) {
+    try {
+        // 方法1：使用 TextEncoder（现代浏览器推荐）
+        const encoder = new TextEncoder();
+        const bytes = encoder.encode(str);
+        // 将字节数组转换为二进制字符串
+        let binary = '';
+        const len = bytes.length;
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+    } catch (e) {
+        // 方法2：降级方案（兼容旧浏览器）
+        return btoa(unescape(encodeURIComponent(str)));
+    }
+}
+
 // 保存文件
 async function saveFile(filename, content, sha) {
     const url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.postsPath}${filename}`;
     
-    // 正确编码 UTF-8 字符串为 Base64
-    const encoder = new TextEncoder();
-    const bytes = encoder.encode(content);
-    let binaryString = '';
-    for (let i = 0; i < bytes.length; i++) {
-        binaryString += String.fromCharCode(bytes[i]);
-    }
-    const base64Content = btoa(binaryString);
+    // 使用更可靠的 UTF-8 到 Base64 转换
+    const base64Content = utf8ToBase64(content);
     
     const body = {
         message: sha ? `Update ${filename}` : `Create ${filename}`,
