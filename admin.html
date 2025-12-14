@@ -1,119 +1,140 @@
 ---
 layout: page
-title: "管理后台"
+# title: "管理后台"  # 不显示在导航栏
 description: "在线编辑博客文章"
 header-img: "img/post-bg-desk.jpg"
 ---
 
 <!-- 管理后台：在线编辑 Markdown 文章 -->
-<div class="admin-container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-    
+<div class="admin-wrapper">
     <!-- 登录区域 -->
-    <div id="login-section" class="panel panel-default" style="margin-top: 50px;">
-        <div class="panel-heading">
-            <h3>GitHub 登录</h3>
+    <div id="login-section" class="admin-login-card">
+        <div class="login-header">
+            <div class="login-icon">
+                <i class="fa fa-github"></i>
+            </div>
+            <h2>博客管理后台</h2>
+            <p class="login-subtitle">使用 GitHub Token 登录以编辑文章</p>
         </div>
-        <div class="panel-body">
-            <p>使用 GitHub 账号登录以编辑文章</p>
-            <div class="form-group">
+        <div class="login-body">
+            <div class="form-group-modern">
                 <label>GitHub Personal Access Token</label>
-                <input type="password" id="github-token" class="form-control" 
-                       placeholder="输入你的 GitHub Personal Access Token">
-                <small class="help-block">
-                    <a href="https://github.com/settings/tokens" target="_blank">如何获取 Token？</a>
-                    需要勾选 <code>repo</code> 权限
+                <input type="password" id="github-token" class="input-modern" 
+                       placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+                <small class="help-text">
+                    <a href="https://github.com/settings/tokens" target="_blank">
+                        <i class="fa fa-external-link"></i> 如何获取 Token？
+                    </a>
+                    <span class="help-tip">需要勾选 <code>repo</code> 权限</span>
                 </small>
             </div>
-            <button class="btn btn-primary" onclick="login()">登录</button>
-            <div id="login-status" style="margin-top: 15px;"></div>
+            <button class="btn-modern btn-primary-modern" onclick="login()">
+                <i class="fa fa-sign-in"></i> 登录
+            </button>
+            <div id="login-status" class="status-message"></div>
         </div>
     </div>
 
     <!-- 管理区域（登录后显示） -->
-    <div id="admin-section" style="display: none;">
+    <div id="admin-section" class="admin-dashboard" style="display: none;">
         
-        <!-- 工具栏 -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>文章管理</h3>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <button class="btn btn-success" onclick="showNewPostForm()">
-                            <i class="fa fa-plus"></i> 新建文章
-                        </button>
-                        <button class="btn btn-default" onclick="loadPosts()">
-                            <i class="fa fa-refresh"></i> 刷新
-                        </button>
-                        <button class="btn btn-warning" onclick="logout()">退出</button>
-                    </div>
-                </div>
+        <!-- 顶部工具栏 -->
+        <div class="admin-header">
+            <div class="admin-header-left">
+                <h1><i class="fa fa-file-text-o"></i> 文章管理</h1>
+                <p class="admin-subtitle">在线编辑和管理你的博客文章</p>
+            </div>
+            <div class="admin-header-right">
+                <button class="btn-modern btn-secondary-modern" onclick="loadPosts()" title="刷新列表">
+                    <i class="fa fa-refresh"></i>
+                </button>
+                <button class="btn-modern btn-success-modern" onclick="showNewPostForm()">
+                    <i class="fa fa-plus"></i> 新建文章
+                </button>
+                <button class="btn-modern btn-warning-modern" onclick="logout()" title="退出登录">
+                    <i class="fa fa-sign-out"></i> 退出
+                </button>
             </div>
         </div>
 
         <!-- 文章列表 -->
-        <div id="posts-list" class="panel panel-default">
-            <div class="panel-body">
-                <div id="loading" class="text-center" style="padding: 40px;">
-                    <i class="fa fa-spinner fa-spin fa-3x"></i>
-                    <p>加载中...</p>
-                </div>
-                <div id="posts-content" style="display: none;"></div>
+        <div id="posts-list" class="admin-content-card">
+            <div id="loading" class="loading-state">
+                <div class="spinner"></div>
+                <p>加载中...</p>
             </div>
+            <div id="posts-content" class="posts-grid" style="display: none;"></div>
         </div>
 
         <!-- 编辑器模态框 -->
         <div class="modal fade" id="editor-modal" tabindex="-1">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" id="editor-title">编辑文章</h4>
+                <div class="modal-content-modern">
+                    <div class="modal-header-modern">
+                        <h4 class="modal-title-modern" id="editor-title">
+                            <i class="fa fa-edit"></i> 编辑文章
+                        </h4>
+                        <button type="button" class="close-modern" data-dismiss="modal">
+                            <i class="fa fa-times"></i>
+                        </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body-modern">
                         <form id="post-form">
-                            <div class="form-group">
-                                <label>标题 *</label>
-                                <input type="text" id="post-title" class="form-control" required>
+                            <div class="form-row-modern">
+                                <div class="form-group-modern">
+                                    <label>标题 <span class="required">*</span></label>
+                                    <input type="text" id="post-title" class="input-modern" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>副标题</label>
-                                <input type="text" id="post-subtitle" class="form-control">
+                            <div class="form-row-modern">
+                                <div class="form-group-modern">
+                                    <label>副标题</label>
+                                    <input type="text" id="post-subtitle" class="input-modern">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>日期 *</label>
-                                <input type="date" id="post-date" class="form-control" required>
+                            <div class="form-row-modern form-row-2">
+                                <div class="form-group-modern">
+                                    <label>日期 <span class="required">*</span></label>
+                                    <input type="date" id="post-date" class="input-modern" required>
+                                </div>
+                                <div class="form-group-modern">
+                                    <label>作者</label>
+                                    <input type="text" id="post-author" class="input-modern" 
+                                           value="{{ site.title }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>作者</label>
-                                <input type="text" id="post-author" class="form-control" 
-                                       value="{{ site.title }}">
+                            <div class="form-row-modern">
+                                <div class="form-group-modern">
+                                    <label>头图</label>
+                                    <input type="text" id="post-header-img" class="input-modern" 
+                                           placeholder="img/post-bg-desk.jpg">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>头图</label>
-                                <input type="text" id="post-header-img" class="form-control" 
-                                       placeholder="img/post-bg-desk.jpg">
+                            <div class="form-row-modern">
+                                <div class="form-group-modern">
+                                    <label>标签（用逗号分隔）</label>
+                                    <input type="text" id="post-tags" class="input-modern" 
+                                           placeholder="标签1, 标签2">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>标签（用逗号分隔）</label>
-                                <input type="text" id="post-tags" class="form-control" 
-                                       placeholder="标签1, 标签2">
-                            </div>
-                            <div class="form-group">
-                                <label>内容（Markdown）*</label>
-                                <textarea id="post-content" class="form-control" rows="15" required></textarea>
+                            <div class="form-row-modern">
+                                <div class="form-group-modern">
+                                    <label>内容（Markdown）<span class="required">*</span></label>
+                                    <textarea id="post-content" class="textarea-modern" rows="15" required></textarea>
+                                </div>
                             </div>
                             <input type="hidden" id="post-filename">
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary" onclick="savePost()">
-                            <i class="fa fa-save"></i> 保存
+                    <div class="modal-footer-modern">
+                        <button type="button" class="btn-modern btn-secondary-modern" data-dismiss="modal">
+                            <i class="fa fa-times"></i> 取消
                         </button>
-                        <button type="button" class="btn btn-danger" id="delete-btn" onclick="deletePost()" style="display: none;">
+                        <button type="button" class="btn-modern btn-danger-modern" id="delete-btn" onclick="deletePost()" style="display: none;">
                             <i class="fa fa-trash"></i> 删除
+                        </button>
+                        <button type="button" class="btn-modern btn-primary-modern" onclick="savePost()">
+                            <i class="fa fa-save"></i> 保存
                         </button>
                     </div>
                 </div>
@@ -127,32 +148,398 @@ header-img: "img/post-bg-desk.jpg"
 <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
 <style>
-.admin-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+/* 现代化后台样式 */
+.admin-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 20px;
 }
-.post-item {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background 0.2s;
+
+/* 登录卡片 */
+.admin-login-card {
+    max-width: 480px;
+    margin: 80px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    animation: slideUp 0.4s ease-out;
 }
-.post-item:hover {
-    background: #f5f5f5;
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-.post-item:last-child {
-    border-bottom: none;
+
+.login-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
 }
-.post-meta-info {
-    color: #999;
-    font-size: 0.9em;
-    margin-top: 5px;
+
+.login-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
 }
-.btn-group-post {
-    margin-top: 10px;
+
+.login-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    font-weight: 600;
 }
-#post-content {
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+
+.login-subtitle {
+    margin: 0;
+    opacity: 0.9;
     font-size: 14px;
+}
+
+.login-body {
+    padding: 30px;
+}
+
+.form-group-modern {
+    margin-bottom: 20px;
+}
+
+.form-group-modern label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+.input-modern {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.input-modern:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.help-text {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666;
+}
+
+.help-text a {
+    color: #667eea;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.help-text a:hover {
+    text-decoration: underline;
+}
+
+.help-tip {
+    color: #999;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+.btn-modern {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-primary-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success-modern {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success-modern:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary-modern {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-secondary-modern:hover {
+    background: #4b5563;
+}
+
+.btn-warning-modern {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-warning-modern:hover {
+    background: #d97706;
+}
+
+.btn-danger-modern {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger-modern:hover {
+    background: #dc2626;
+}
+
+.status-message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* 管理面板 */
+.admin-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.admin-header-left h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-subtitle {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.admin-header-right {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-content-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    min-height: 400px;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: #6b7280;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #e5e7eb;
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.posts-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.post-item-modern {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.post-item-modern:hover {
+    border-color: #667eea;
+    background: #f3f4f6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.post-item-modern h4 {
+    margin: 0 0 10px 0;
+    color: #1f2937;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.post-meta-modern {
+    display: flex;
+    gap: 16px;
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.post-meta-modern i {
+    margin-right: 4px;
+}
+
+/* 模态框样式 */
+.modal-content-modern {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.modal-header-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title-modern {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.close-modern {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modern:hover {
+    background: rgba(255,255,255,0.3);
+    transform: rotate(90deg);
+}
+
+.modal-body-modern {
+    padding: 30px;
+}
+
+.form-row-modern {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.textarea-modern {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    resize: vertical;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.textarea-modern:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.modal-footer-modern {
+    padding: 20px 30px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .admin-header-right {
+        width: 100%;
+    }
+    
+    .btn-modern {
+        flex: 1;
+    }
+    
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 
@@ -273,20 +660,20 @@ async function getPostsList() {
 // 显示文章列表
 function displayPostsList(files) {
     if (files.length === 0) {
-        $('#posts-content').html('<p class="text-center">暂无文章</p>');
+        $('#posts-content').html('<div style="text-align: center; padding: 60px; color: #6b7280;"><i class="fa fa-file-text-o" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i><p>暂无文章，点击"新建文章"开始创作吧！</p></div>');
         return;
     }
     
     let html = '';
     files.forEach(file => {
         const date = file.name.substring(0, 10);
-        const title = file.name.substring(11).replace('.md', '');
+        const title = file.name.substring(11).replace('.md', '').replace(/-/g, ' ');
         html += `
-            <div class="post-item" onclick="editPost('${file.name}', '${file.sha}')">
+            <div class="post-item-modern" onclick="editPost('${file.name}', '${file.sha}')">
                 <h4>${title}</h4>
-                <div class="post-meta-info">
-                    <i class="fa fa-calendar"></i> ${date} | 
-                    <i class="fa fa-file"></i> ${file.name}
+                <div class="post-meta-modern">
+                    <span><i class="fa fa-calendar"></i> ${date}</span>
+                    <span><i class="fa fa-file"></i> ${file.name}</span>
                 </div>
             </div>
         `;
@@ -607,10 +994,17 @@ async function deleteFile(filename, sha) {
 
 // 显示消息
 function showMessage(containerId, message, type) {
-    const alertClass = type === 'success' ? 'alert-success' : 
-                      type === 'danger' ? 'alert-danger' : 'alert-info';
-    $(`#${containerId}`).html(`<div class="alert ${alertClass}">${message}</div>`);
+    const bgColor = type === 'success' ? '#10b981' : 
+                   type === 'danger' ? '#ef4444' : '#3b82f6';
+    const icon = type === 'success' ? 'fa-check-circle' : 
+                type === 'danger' ? 'fa-exclamation-circle' : 'fa-info-circle';
+    $(`#${containerId}`).html(`
+        <div class="status-message" style="background: ${bgColor}; color: white;">
+            <i class="fa ${icon}"></i> ${message}
+        </div>
+    `);
     setTimeout(() => {
+        $(`#${containerId}`).html('');
         if (containerId === 'posts-content') {
             loadPosts();
         }
