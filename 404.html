@@ -7,7 +7,8 @@ permalink: /404.html
 
 
 <!-- Page Header -->
-<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
+<header class="intro-header"
+	style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -22,4 +23,13 @@ permalink: /404.html
 
 <script>
 	document.body.classList.add('page-fullscreen');
+
+	// Auto Redirect to Main Site
+	setTimeout(function () {
+		window.location.href = "https://www.twinsglow.com";
+	}, 3000);
 </script>
+<meta http-equiv="refresh" content="3;url=https://www.twinsglow.com">
+<div style="text-align: center; margin-top: 20px;">
+	<p>页面未找到，3秒后自动跳转至 <a href="https://www.twinsglow.com">TwinsGlow 官网</a>...</p>
+</div>

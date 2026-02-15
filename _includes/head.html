@@ -18,7 +18,24 @@
     <link rel="apple-touch-icon" href="{{ site.baseurl }}/img/apple-touch-icon.png">
     
     <!-- 规范化链接（利于 SEO，避免重复收录） -->
-    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="canonical" href="https://www.twinsglow.com{{ page.url | replace:'index.html','' }}">
+
+    <!-- JSON-LD Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TwinsGlow",
+      "url": "https://www.twinsglow.com",
+      "logo": "https://www.twinsglow.com/img/avatar.jpg",
+      "sameAs": [
+        "https://ccjmcc.github.io",
+        "https://ccjmcc.xyz",
+        "https://www.twinsglow.com"
+      ]
+    }
+    </script>
+
 
     <!-- 核心样式：Bootstrap、主题样式、代码高亮 -->
     <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
